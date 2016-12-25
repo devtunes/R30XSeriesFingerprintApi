@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="Jamsaz.FingerPrintAPI.WinIotDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Jamsaz.FingerPrintAPI.WinIotDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <Button Name="ConnectButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,5" Click="ConnectButton_Click">ConnectToFingerPrint</Button>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="EnrollButton" Grid.Column="1" Click="EnrollButton_Click">Enroll</Button>
+                <TextBox Name="PageIdTextBox" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </Grid>
+            <Button Name="GetTemplateNumberButton" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,5" Click="GetTemplateNumberButton_Click">GetNumberOfFingers</Button>
+            <Button Name="ReadSystemParameter" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,5" Click="ReadSystemParameter_Click">ReadSystemParameter</Button>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="Load" Grid.Column="1" Click="Load_Click" >Load</Button>
+                <TextBox Name="CharPageIdTextBox" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </Grid>
+        </StackPanel>
+        <TextBlock Name="StatusText" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1"/>
+    </Grid>
+</Page>
