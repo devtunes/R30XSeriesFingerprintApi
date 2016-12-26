@@ -8,13 +8,13 @@ namespace Jamsaz.FingerPrintPortableAPI
     {
         Task<bool> VerifyPassword(byte[] password);
 
-        void SetPassword(byte[] password);
+        Task SetPassword(byte[] password);
 
-        void SetModuleAddress(byte[] newAddress);
+        Task SetModuleAddress(byte[] newAddress);
 
-        void SetSystemParameter(byte parameterNumber, byte parameterContent);
+        Task SetSystemParameter(byte parameterNumber, byte parameterContent);
 
-        void SetPort(byte controleCode);
+        Task SetPort(byte controleCode);
 
         Task<BasicParameters> ReadSystemParameter();
 
@@ -26,11 +26,11 @@ namespace Jamsaz.FingerPrintPortableAPI
 
         Task<byte[]> GetImageFromImageBuffer();
 
-        void InsertImageToImageBuffer(byte[] fingerImage);
+        Task InsertImageToImageBuffer(byte[] fingerImage);
 
         Task GenerateTemplate();
 
-        void InsertTemplateToBuffer(byte bufferId,byte[] template);
+        Task InsertTemplateToBuffer(byte bufferId,byte[] template);
 
         Task<byte[]> GetTemplateFromBuffer(byte bufferId);
 
@@ -40,7 +40,7 @@ namespace Jamsaz.FingerPrintPortableAPI
 
         Task<bool> DeleteTemplate(byte[] pageId, byte len);
 
-        void EmptyDataBase();
+        Task EmptyDataBase();
 
         Task<int> SearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages);
 

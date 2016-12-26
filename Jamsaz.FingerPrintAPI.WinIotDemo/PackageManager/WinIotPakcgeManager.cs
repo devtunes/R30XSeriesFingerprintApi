@@ -78,6 +78,15 @@ namespace Jamsaz.FingerPrintAPI.WinIotDemo.PackageManager
             });
         }
 
+        public async Task WritePacket(Packet inputPacket)
+        {
+            var packetTowrite = inputPacket.ReadAll();
+            _dataWriteObject = new DataWriter(_serialDevice.OutputStream);
+            _dataWriteObject.WriteBytes(packetTowrite);
+            var storeAsyncTask = _dataWriteObject.StoreAsync().AsTask();
+            await storeAsyncTask;
+        }
+
         private async void ListenToSerialPort()
         {
             try

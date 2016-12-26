@@ -151,7 +151,7 @@ namespace Jamsaz.FingerPrintAPI.WinIotDemo
                     fingerData[i] = data[j];
                 }
                 //File.WriteAllBytes($"C:\\finger{TypeConverter.ToUnInt16(pageId)}.finger", data);
-                StatusText.Text = "Data of finger was written on disk";
+                StatusText.Text = "Data of finger written on disk";
             }
             catch (Exception ex)
             {

@@ -47,7 +47,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// Change password of your device.
         /// </summary>
         /// <param name="password">your new password</param>
-        public async void SetPassword(byte[] password)
+        public async Task SetPassword(byte[] password)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// Change address of the device. Default address of R305 finger print is 0xffffffff.
         /// </summary>
         /// <param name="newAddress">Address shuold as a byte array with 4 byte length. For Example newAddress = new byte[]{0xff,0xff,0xff,0xff}</param>
-        public async void SetModuleAddress(byte[] newAddress)
+        public async Task SetModuleAddress(byte[] newAddress)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// </summary>
         /// <param name="parameterNumber">4,5,6</param>
         /// <param name="parameterContent">Content of the parameter</param>
-        public async void SetSystemParameter(byte parameterNumber, byte parameterContent)
+        public async Task SetSystemParameter(byte parameterNumber, byte parameterContent)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// For UART protocol, it control the "on/off" of USB port;  For USB protocol, it control the "on/off" of UART port
         /// </summary>
         /// <param name="controleCode">Control code "0" means turns off the port;  Control code "1" means turns on the port</param>
-        public async void SetPort(byte controleCode)
+        public async Task SetPort(byte controleCode)
         {
             try
             {
@@ -321,7 +321,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// To get the image from host computer.
         /// </summary>
         /// <param name="fingerImage">byte array of a valid finger image</param>
-        public async void InsertImageToImageBuffer(byte[] fingerImage)
+        public async Task InsertImageToImageBuffer(byte[] fingerImage)
         {
             try
             {
@@ -385,7 +385,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// </summary>
         /// <param name="bufferId">BufferId of charbuffer1 and charbuffer2 are 1 and 2 respectively.</param>
         /// <param name="template">Byte arry to transfer template to one of the buffers</param>
-        public async void InsertTemplateToBuffer(byte bufferId, byte[] template)
+        public async Task InsertTemplateToBuffer(byte bufferId, byte[] template)
         {
             try
             {
@@ -402,7 +402,8 @@ namespace Jamsaz.FingerPrintPortableAPI
                 if (result.Read(9) == ReturnCode.Ok)
                 {
                     var templatePacket = new Packet(template);
-                    await _packageManager.SendPacket(templatePacket);
+                    await _packageManager.WritePacket(templatePacket);
+                    return;
                 }
                 var error = result.Read(9) == ReturnCode.ReciveError
                     ? "[Error] fail to receive the following data packages"
@@ -555,7 +556,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// <summary>
         /// Remove all record of fingers from the memory.
         /// </summary>
-        public async void EmptyDataBase()
+        public async Task EmptyDataBase()
         {
             try
             {

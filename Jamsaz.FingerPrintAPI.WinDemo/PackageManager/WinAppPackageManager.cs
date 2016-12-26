@@ -61,5 +61,12 @@ namespace Jamsaz.FingerPrintAPI.WinDemo.PackageManager
             _packetRecived.WaitOne(50000);
             return await Task.Run(() => new Packet(_currentData));
         }
+
+        public Task WritePacket(Packet inputPacket)
+        {
+            var packetTowrite = inputPacket.ReadAll();
+            _port.Write(packetTowrite, 0, packetTowrite.Length);
+            return null;
+        }
     }
 }
