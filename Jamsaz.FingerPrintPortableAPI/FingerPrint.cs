@@ -606,7 +606,7 @@ namespace Jamsaz.FingerPrintPortableAPI
 
                 if (result.Read(9) == ReturnCode.Ok) // Return Page id Is 2 Byte
                 {
-                    var resultByte = new byte[] {result.Read(10), result.Read(11)};
+                    var resultByte = new byte[] { result.Read(11), result.Read(10), 0, 0 };
                     return BitConverter.ToInt32(resultByte, 0);
                 }
                 var error = result.Read(9) == ReturnCode.NotSearched
