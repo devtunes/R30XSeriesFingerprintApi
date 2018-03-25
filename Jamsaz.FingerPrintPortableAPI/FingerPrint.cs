@@ -630,7 +630,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         {
             try
             {
-                var packet = new Packet(deviceAddress, PacketSizes.SearchFingerLen);
+                var packet = new Packet(_deviceAddress, PacketSizes.SearchFingerLen);
                 packet.Write(0x01);
                 packet.Write(0x00);
                 packet.Write(0x08);
@@ -639,15 +639,16 @@ namespace Jamsaz.FingerPrintPortableAPI
                 packet.Write(startPageId);
                 packet.Write(numberOfPages);
                 packet.Write(packet.CalculateCheckSum());
-                var result = await packageManager.SendPacket(packet);
+                var result = await _packageManager.SendPacket(packet);
                  if (result.Read(9) == ReturnCode.Ok) // Return Page id Is 2 Byte
                 {
                     var resultByte = new byte[] { result.Read(11), result.Read(10), 0, 0 };
                     return BitConverter.ToInt32(resultByte, 0);
                 }
-                if (result.Read(9) == ReturnCode.NotSearched)
-                    return "0";
-                throw new Exception(" Error when receiving package-- >[FingerPrint_HighSearchFinger]");
+               var error = result.Read(9) == ReturnCode.NotSearched
+                    ? "[Error] No matching in the library (both the PageID and matching score are 0);"
+                    : "[Error] when receiving package";
+                throw new Exception($"{error} -->[FingerPrint_SearchFinger]");
             }
             catch (Exception ex)
             {
