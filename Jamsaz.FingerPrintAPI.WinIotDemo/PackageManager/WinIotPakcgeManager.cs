@@ -59,6 +59,7 @@ namespace Jamsaz.FingerPrintAPI.WinIotDemo.PackageManager
 
         public void Dispose()
         {
+            CloseSerialPortDevice();
             _serialDevice = null;
         }
 
