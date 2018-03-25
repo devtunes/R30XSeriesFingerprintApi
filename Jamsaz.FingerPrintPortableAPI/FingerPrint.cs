@@ -626,7 +626,7 @@ namespace Jamsaz.FingerPrintPortableAPI
         /// <param name="startPageId">Start flash location</param>
         /// <param name="numberOfPages">Searching numbers</param>
         /// <returns>If the finger is found return pageId</returns>
-        public async Task<string> HighSearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages)
+        public async Task<int> HighSearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages)
         {
             try
             {
@@ -638,8 +638,7 @@ namespace Jamsaz.FingerPrintPortableAPI
                 packet.Write(bufferId);
                 packet.Write(startPageId);
                 packet.Write(numberOfPages);
-                packet.Write(0x01);
-                packet.Write(0x11);
+                packet.Write(packet.CalculateCheckSum());
                 var result = await packageManager.SendPacket(packet);
                  if (result.Read(9) == ReturnCode.Ok) // Return Page id Is 2 Byte
                 {
