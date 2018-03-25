@@ -44,7 +44,7 @@ namespace Jamsaz.FingerPrintPortableAPI
 
         Task<int> SearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages);
         
-        Task<string> HighSearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages);
+        Task<int> HighSearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages);
         
         Task Reset();
     }
