@@ -604,7 +604,11 @@ namespace Jamsaz.FingerPrintPortableAPI
 
                 var result = await _packageManager.SendPacket(packet);
 
-                if (result.Read(9) == ReturnCode.Ok) return result.Read(10);
+                if (result.Read(9) == ReturnCode.Ok) // Return Page id Is 2 Byte
+                {
+                    var resultByte = new byte[] { result.Read(11), result.Read(10), 0, 0 };
+                    return BitConverter.ToInt32(resultByte, 0);
+                }
                 var error = result.Read(9) == ReturnCode.NotSearched
                     ? "[Error] No matching in the library (both the PageID and matching score are 0);"
                     : "[Error] when receiving package";
@@ -615,7 +619,42 @@ namespace Jamsaz.FingerPrintPortableAPI
                 throw new Exception(ex.Message + "-->[FingerPrint_SearchFinger]", ex.InnerException);
             }
         }
-
+ /// <summary>
+        /// To search the whole finger library for the template that matches the one in CharBuffer1 or CharBuffer2. When found, PageID will be returned
+        /// </summary>
+        /// <param name="bufferId">BufferId of charbuffer1 and charbuffer2 are 1 and 2 respectively.</param>
+        /// <param name="startPageId">Start flash location</param>
+        /// <param name="numberOfPages">Searching numbers</param>
+        /// <returns>If the finger is found return pageId</returns>
+        public async Task<int> HighSearchFinger(byte bufferId, byte[] startPageId, byte[] numberOfPages)
+        {
+            try
+            {
+                var packet = new Packet(_deviceAddress, PacketSizes.SearchFingerLen);
+                packet.Write(0x01);
+                packet.Write(0x00);
+                packet.Write(0x08);
+                packet.Write(InstructionCodes.HighSearchInDatabase);
+                packet.Write(bufferId);
+                packet.Write(startPageId);
+                packet.Write(numberOfPages);
+                packet.Write(packet.CalculateCheckSum());
+                var result = await _packageManager.SendPacket(packet);
+                 if (result.Read(9) == ReturnCode.Ok) // Return Page id Is 2 Byte
+                {
+                    var resultByte = new byte[] { result.Read(11), result.Read(10), 0, 0 };
+                    return BitConverter.ToInt32(resultByte, 0);
+                }
+               var error = result.Read(9) == ReturnCode.NotSearched
+                    ? "[Error] No matching in the library (both the PageID and matching score are 0);"
+                    : "[Error] when receiving package";
+                throw new Exception($"{error} -->[FingerPrint_SearchFinger]");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "-->[FingerPrint_SearchFinger]", ex.InnerException);
+            }
+        }
         /// <summary>
         /// To reset the buffers
         /// </summary>
