@@ -1,1 +1,1 @@
-# R30XSeriesFingerprintApi
+# R30X Series Fingerprint Scanner Api
