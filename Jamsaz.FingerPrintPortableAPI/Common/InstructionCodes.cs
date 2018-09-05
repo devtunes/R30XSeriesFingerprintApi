@@ -22,6 +22,7 @@
         public const byte EmptyDataBase = 0x0d;
         public const byte MatchInDatabase = 0x03;
         public const byte SearchInDatabase = 0x04;
+        public const byte HighSearchInDatabase = 0x1B;
         public const byte GetRandomCode = 0x01;
         public const byte WriteNotePad = 0x18;
         public const byte ReadNotePad = 0x19;
